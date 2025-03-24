@@ -2,23 +2,23 @@
 
 import { program } from 'commander';
 
-import { add, list } from '@commands/index';
+import { commands } from '@commands/index';
 import { logo } from '@utils/logo';
 
 logo();
 
-program.addCommand(add);
-program.addCommand(list);
+commands.forEach(command => program.addCommand(command));
 
 program
-  .name('pomotimer')
-  .description('A Pomodoro CLI timer.')
+  .name('taskr')
+  .description('A task tracker CLI.')
   .version('1.0.0')
   .addHelpText(
     'after',
     `\nExamples:
-  $ taskr -a "Clean node_modules"
-  $ taskr -a "Study" "Do 5 leetcode exercises"`,
+  $ taskr add "Clean node_modules"
+  $ taskr add "Study" "Do 5 leetcode exercises"
+  $ taskr list"`,
   )
   .showSuggestionAfterError();
 
