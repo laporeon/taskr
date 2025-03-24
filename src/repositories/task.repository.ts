@@ -11,8 +11,6 @@ export class TaskRepository {
     '../../output/tasks.json',
   );
 
-  public tasks: Task[] = [];
-
   async get() {
     const fileContent = await fs.readFile(this.filePath, 'utf-8');
     const tasks: Task[] = JSON.parse(fileContent);
