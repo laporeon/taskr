@@ -9,10 +9,6 @@ interface Task {
   updatedAt?: string;
 }
 
-// TODO: refactor here
-interface TaskInput {
-  title: string;
-  description?: string;
-}
+type TaskInput = Pick<Task, 'title' | 'description'>;
 
 export { Task, TaskInput };
