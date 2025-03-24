@@ -11,4 +11,4 @@ export const add = new Command('add')
   .action(async (title: string, description?: string) => {
     await taskService.create({ title, description });
   })
-  .description('Add a new task');
+  .description('Add a new task with an optional description.');
