@@ -3,9 +3,6 @@
 import { program } from 'commander';
 
 import { commands } from '@commands/index';
-import { logo } from '@utils/logo';
-
-logo();
 
 commands.forEach(command => program.addCommand(command));
 
