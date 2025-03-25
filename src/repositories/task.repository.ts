@@ -16,6 +16,13 @@ export class TaskRepository {
     return tasks.length + 1;
   }
 
+  async render(tasks: Task[]) {
+    console.log(`\n  ${Colors.underline}Tasks${Colors.reset}`);
+    return tasks.map(({ id, title }: Task) => {
+      console.log(`   ${Colors.gray}${id}. ${Colors.white}${title}`);
+    });
+  }
+
   async get(status: string) {
     const fileContent = await fs.readFile(this.filePath, 'utf-8');
     const tasks: Task[] = JSON.parse(fileContent);
@@ -39,8 +46,6 @@ export class TaskRepository {
       status: TaskStatus.TODO,
       createdAt: new Date().toISOString(),
     };
-
-    console.log({ task });
 
     tasks.push(task);
 
