@@ -6,8 +6,8 @@ import { TaskService } from '@services/task.service';
 const taskService = new TaskService(new TaskRepository());
 
 export const list = new Command('list')
-  // TODO: add functionality to list by status provided by user input
-  .action(async () => {
-    await taskService.list();
+  .argument('[status]', 'Optional task status.')
+  .action(async (status: string) => {
+    await taskService.list(status);
   })
-  .description('List all tasks');
+  .description('List all tasks or list tasks by status.');
