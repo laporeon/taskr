@@ -10,6 +10,6 @@ export class TaskService {
 
   async list(status: string) {
     const tasks = await this.taskRepository.get(status);
-    console.log({ tasks });
+    this.taskRepository.render(tasks);
   }
 }
