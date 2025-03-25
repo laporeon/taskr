@@ -11,15 +11,19 @@ export class TaskRepository {
     '../../output/tasks.json',
   );
 
-  async get() {
+  async get(status: string) {
     const fileContent = await fs.readFile(this.filePath, 'utf-8');
     const tasks: Task[] = JSON.parse(fileContent);
 
-    return tasks;
+    if (!status) {
+      return tasks;
+    }
+
+    return tasks.filter(task => task.status === status);
   }
 
   async add({ title, description }: TaskInput) {
-    const tasks = await this.get();
+    const tasks = await this.get('');
 
     const task: Task = {
       id: randomUUID(),
