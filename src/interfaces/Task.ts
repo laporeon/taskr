@@ -1,14 +1,14 @@
-import { TaskStatus } from '@utils/taskStatus';
+import { TaskPriority, TaskStatus } from '@enums/index';
 
 interface Task {
   id: number;
   title: string;
-  description?: string;
+  priority?: TaskPriority;
   status: TaskStatus;
   createdAt: string;
   updatedAt?: string;
 }
 
-type TaskInput = Pick<Task, 'title' | 'description'>;
+type TaskInput = Pick<Task, 'title' | 'priority'>;
 
 export { Task, TaskInput };
