@@ -8,8 +8,8 @@ export class TaskService {
     await this.taskRepository.add({ title, description });
   }
 
-  async list() {
-    const tasks = await this.taskRepository.get();
+  async list(status: string) {
+    const tasks = await this.taskRepository.get(status);
     console.log({ tasks });
   }
 }
