@@ -17,7 +17,8 @@ program
     'after',
     `\nExamples:
   $ taskr add "Clean node_modules"
-  $ taskr add "Study" "Do 5 leetcode exercises"
+  $ taskr add "Study" high
+  $ taskr add "Read article" medium
   $ taskr list
   $ taskr list "todo"
   `,
