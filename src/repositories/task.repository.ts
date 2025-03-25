@@ -1,7 +1,12 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
-import { TaskStatus, Colors } from '@enums/index';
+import {
+  TaskStatus,
+  Colors,
+  TaskStatusSymbols,
+  TaskPrioritySymbols,
+} from '@enums/index';
 import { Task, TaskInput } from '@interfaces/Task';
 
 export class TaskRepository {
@@ -18,8 +23,13 @@ export class TaskRepository {
 
   async render(tasks: Task[]) {
     console.log(`\n  ${Colors.underline}Tasks${Colors.reset}`);
-    return tasks.map(({ id, title }: Task) => {
-      console.log(`   ${Colors.gray}${id}. ${Colors.white}${title}`);
+    tasks.map(({ id, title, status, priority }: Task) => {
+      const statusSymbol = TaskStatusSymbols[status];
+      const prioritySymbol = TaskPrioritySymbols[priority];
+
+      console.log(
+        `   ${Colors.gray}${id}. ${statusSymbol}${title}${Colors.reset} ${prioritySymbol}${Colors.reset}`,
+      );
     });
   }
 
