@@ -1,9 +1,8 @@
-import { randomUUID } from 'node:crypto';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
+import { TaskStatus, Colors } from '@enums/index';
 import { Task, TaskInput } from '@interfaces/Task';
-import { TaskStatus } from '@utils/taskStatus';
 
 export class TaskRepository {
   private readonly filePath = path.resolve(
@@ -28,7 +27,7 @@ export class TaskRepository {
     return tasks.filter(task => task.status === status);
   }
 
-  async add({ title, description }: TaskInput) {
+  async add({ title, priority }: TaskInput) {
     const tasks = await this.get('');
 
     const id = await this.generateId();
@@ -36,14 +35,18 @@ export class TaskRepository {
     const task: Task = {
       id,
       title,
-      description,
+      priority,
       status: TaskStatus.TODO,
       createdAt: new Date().toISOString(),
     };
 
+    console.log({ task });
+
     tasks.push(task);
 
     await fs.writeFile(this.filePath, JSON.stringify(tasks, null, 2));
-    console.log('Task successfully added!');
+    console.log(
+      `\n${Colors.green}✔ ${Colors.gray}Task successfully created!${Colors.reset}`,
+    );
   }
 }
