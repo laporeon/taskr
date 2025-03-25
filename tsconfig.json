@@ -20,7 +20,8 @@
       "@interfaces/*": ["./src/interfaces/*"],
       "@repositories/*": ["./src/repositories/*"],
       "@services/*": ["./src/services/*"],
-      "@commands/*": ["./src/commands/*"]
+      "@commands/*": ["./src/commands/*"],
+      "@enums/*": ["./src/enums/*"]
     }
   },
   "include": ["./src/**/*"],
