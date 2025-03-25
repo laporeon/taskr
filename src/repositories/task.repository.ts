@@ -11,6 +11,12 @@ export class TaskRepository {
     '../../output/tasks.json',
   );
 
+  async generateId() {
+    const tasks = await this.get('');
+
+    return tasks.length + 1;
+  }
+
   async get(status: string) {
     const fileContent = await fs.readFile(this.filePath, 'utf-8');
     const tasks: Task[] = JSON.parse(fileContent);
@@ -25,8 +31,10 @@ export class TaskRepository {
   async add({ title, description }: TaskInput) {
     const tasks = await this.get('');
 
+    const id = await this.generateId();
+
     const task: Task = {
-      id: randomUUID(),
+      id,
       title,
       description,
       status: TaskStatus.TODO,
