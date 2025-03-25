@@ -4,8 +4,8 @@ import { TaskRepository } from '@repositories/task.repository';
 export class TaskService {
   constructor(private readonly taskRepository: TaskRepository) {}
 
-  async create({ title, description }: TaskInput) {
-    await this.taskRepository.add({ title, description });
+  async create({ title, priority }: TaskInput) {
+    await this.taskRepository.add({ title, priority });
   }
 
   async list(status: string) {
