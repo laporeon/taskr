@@ -18,7 +18,9 @@ program
     `\nExamples:
   $ taskr add "Clean node_modules"
   $ taskr add "Study" "Do 5 leetcode exercises"
-  $ taskr list"`,
+  $ taskr list
+  $ taskr list "todo"
+  `,
   )
   .showSuggestionAfterError();
 
