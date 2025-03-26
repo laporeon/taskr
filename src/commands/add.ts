@@ -1,12 +1,13 @@
 import { Command } from 'commander';
 
-import { TaskPriority, Colors } from '@enums/index';
+import { TaskPriority } from '@enums/index';
 import { TaskRepository } from '@repositories/task.repository';
 import { TaskService } from '@services/task.service';
+import { Validator } from '@utils/Validator';
+
+const validator = new Validator();
 
 const taskService = new TaskService(new TaskRepository());
-
-const priorityAllowedValues = Object.values(TaskPriority);
 
 export const add = new Command('add')
   .argument('<title>', 'Title of the task')
@@ -18,11 +19,9 @@ export const add = new Command('add')
   .action(async (title: string, options) => {
     const { priority } = options;
 
-    if (!priorityAllowedValues.includes(priority as TaskPriority)) {
-      return console.error(
-        `${Colors.red}Error: Invalid value for priority: "${priority}". Allowed values are: high, medium or low.`,
-      );
-    }
+    validator.validate([
+      { value: priority, enum: TaskPriority, fieldName: 'priority' },
+    ]);
 
     await taskService.create({ title, priority });
   })
