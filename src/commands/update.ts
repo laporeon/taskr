@@ -1,6 +1,7 @@
 import { Command } from 'commander';
 
 import { Colors } from '@enums/Colors';
+import { TaskPriority, TaskStatus } from '@enums/index';
 import { TaskRepository } from '@repositories/task.repository';
 import { TaskService } from '@services/task.service';
 import { Validator } from '@utils/Validator';
@@ -30,7 +31,10 @@ export const update = new Command('update')
       );
     }
 
-    validator.validate(status, priority);
+    validator.validate([
+      { value: status, enum: TaskStatus, fieldName: 'status' },
+      { value: priority, enum: TaskPriority, fieldName: 'priority' },
+    ]);
 
     await taskService.update({ id: parseInt(id), title, status, priority });
   })
