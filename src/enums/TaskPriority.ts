@@ -1,9 +1,9 @@
 import { Colors } from './Colors';
 
 export enum TaskPriority {
-  HIGH = 'high',
-  MEDIUM = 'medium',
   LOW = 'low',
+  MEDIUM = 'medium',
+  HIGH = 'high',
 }
 
 export const TaskPrioritySymbols: Record<TaskPriority, string> = {
