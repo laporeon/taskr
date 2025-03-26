@@ -9,6 +9,6 @@ interface Task {
   updatedAt?: string;
 }
 
-type TaskInput = Pick<Task, 'title' | 'priority'>;
+type CreateTaskInput = Pick<Task, 'title' | 'priority'>;
 
-export { Task, TaskInput };
+export { Task, CreateTaskInput };
