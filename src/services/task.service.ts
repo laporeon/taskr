@@ -1,17 +1,22 @@
-import { TaskInput } from '@interfaces/Task';
+import { TaskStatus } from '@enums/TaskStatus';
+import { CreateTaskInput, Task } from '@interfaces/Task';
 import { TaskRepository } from '@repositories/task.repository';
 import { renderTaskboard } from '@utils/taskboard';
 
 export class TaskService {
   constructor(private readonly taskRepository: TaskRepository) {}
 
-  async create({ title, priority }: TaskInput) {
+  async create({ title, priority }: CreateTaskInput) {
     await this.taskRepository.add({ title, priority });
   }
 
-  async list(status: string) {
+  async list(status?: TaskStatus) {
     const tasks = await this.taskRepository.get(status);
     renderTaskboard(tasks);
+  }
+
+  async update({ id, title, status, priority }: Partial<Task>) {
+    await this.taskRepository.update({ id, title, status, priority });
   }
 
   async delete(id: number) {
