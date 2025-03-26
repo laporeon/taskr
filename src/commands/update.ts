@@ -1,13 +1,13 @@
 import { Command } from 'commander';
 
-import { TaskPriority, Colors, TaskStatus } from '@enums/index';
+import { Colors } from '@enums/Colors';
 import { TaskRepository } from '@repositories/task.repository';
 import { TaskService } from '@services/task.service';
+import { Validator } from '@utils/Validator';
 
 const taskService = new TaskService(new TaskRepository());
 
-const priorityAllowedValues = Object.values(TaskPriority);
-const statusAllowedValues = Object.values(TaskStatus);
+const validator = new Validator();
 
 export const update = new Command('update')
   .argument('<id>', 'Task id.')
@@ -23,20 +23,14 @@ export const update = new Command('update')
   .action(async (id: string, options) => {
     const { title, status, priority } = options;
 
-    // TODO: add validation to check if user sent at least one option
-
-    if (status && !statusAllowedValues.includes(status as TaskStatus)) {
+    // TODO: improve input validations
+    if (!title && !status && !priority) {
       return console.error(
-        `${Colors.red}Error: Invalid value for priority: "${status}". Allowed values are: todo, in-progress or done.`,
-      );
-    }
-    if (priority && !priorityAllowedValues.includes(priority as TaskPriority)) {
-      return console.error(
-        `${Colors.red}Error: Invalid value for priority: "${priority}". Allowed values are: high, medium or low.`,
+        `${Colors.red}Missing one or more updated fields. You can either update title, status, priority or all of them at once.`,
       );
     }
 
-    console.log({ id, title, status, priority });
+    validator.validate(status, priority);
 
     await taskService.update({ id: parseInt(id), title, status, priority });
   })
