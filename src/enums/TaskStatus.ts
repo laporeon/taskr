@@ -7,7 +7,7 @@ export enum TaskStatus {
 }
 
 export const TaskStatusSymbols: Record<TaskStatus, string> = {
-  [TaskStatus.TODO]: `${Colors.white}◻${Colors.reset} `,
+  [TaskStatus.TODO]: `${Colors.orange}◻${Colors.reset} `,
   [TaskStatus.IN_PROGRESS]: `${Colors.blue}↻${Colors.reset} `,
   [TaskStatus.DONE]: `${Colors.green}✓ ${Colors.gray}${Colors.strikethrough}`,
 };
