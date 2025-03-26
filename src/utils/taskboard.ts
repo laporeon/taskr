@@ -16,7 +16,7 @@ const renderTaskboard = (tasks: Task[]) => {
     const prioritySymbol = TaskPrioritySymbols[priority];
 
     console.log(
-      `   ${Colors.gray}${id}. ${statusSymbol}${title}${Colors.reset} ${prioritySymbol}`,
+      `   ${Colors.gray}${id}. ${statusSymbol}${title} ${prioritySymbol}`,
     );
   });
 
