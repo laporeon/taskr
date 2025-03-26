@@ -22,7 +22,9 @@
       "@services/*": ["./src/services/*"],
       "@commands/*": ["./src/commands/*"],
       "@enums/*": ["./src/enums/*"]
-    }
+    },
+    "noUnusedParameters": true,
+    "noUnusedLocals": true
   },
   "include": ["./src/**/*"],
   "exclude": ["node_modules/**/*", "dist", "output"]
