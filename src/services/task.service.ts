@@ -15,8 +15,8 @@ export class TaskService {
     renderTaskboard(tasks);
   }
 
-  async update({ id, title, status, priority }: Partial<Task>) {
-    await this.taskRepository.update({ id, title, status, priority });
+  async update(id: number, options: Partial<Task>) {
+    await this.taskRepository.update(id, options);
   }
 
   async delete(id: number) {
