@@ -1,13 +1,13 @@
 import { Command } from 'commander';
 
-import { Colors } from '@enums/index';
 import { TaskStatus } from '@enums/TaskStatus';
 import { TaskRepository } from '@repositories/task.repository';
 import { TaskService } from '@services/task.service';
+import { Validator } from '@utils/Validator';
 
 const taskService = new TaskService(new TaskRepository());
 
-const statusAllowedValues = Object.values(TaskStatus);
+const validator = new Validator();
 
 export const list = new Command('list')
   .option(
@@ -17,11 +17,10 @@ export const list = new Command('list')
   .action(async options => {
     const { status } = options;
 
-    if (status && !statusAllowedValues.includes(status as TaskStatus)) {
-      return console.error(
-        `${Colors.red}Error: Invalid value for priority: "${status}". Allowed values are: todo, in-progress or done.`,
-      );
-    }
+    validator.validate([
+      { value: status, enum: TaskStatus, fieldName: 'status' },
+    ]);
+
     await taskService.list(status);
   })
   .description('List all tasks or list tasks by status.');
