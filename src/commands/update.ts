@@ -22,20 +22,22 @@ export const update = new Command('update')
     'Optional task priority. Value must be: high, medium or low.',
   )
   .action(async (id: string, options) => {
-    const { title, status, priority } = options;
+    const taskId = parseInt(id);
 
     // TODO: improve input validations
-    if (!title && !status && !priority) {
+    if (!options.title && !options.status && !options.priority) {
       return console.error(
         `${Colors.red}Missing one or more updated fields. You can either update title, status, priority or all of them at once.`,
       );
     }
 
     validator.validate([
-      { value: status, enum: TaskStatus, fieldName: 'status' },
-      { value: priority, enum: TaskPriority, fieldName: 'priority' },
+      { value: options.status, enum: TaskStatus, fieldName: 'status' },
+      { value: options.priority, enum: TaskPriority, fieldName: 'priority' },
     ]);
 
-    await taskService.update({ id: parseInt(id), title, status, priority });
+    await taskService.update(taskId, options);
   })
-  .description('Update task title, status or priority.');
+  .description(
+    'Update task title, status or priority. You can also update all at once.',
+  );
