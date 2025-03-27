@@ -46,20 +46,37 @@ export class TaskRepository {
     return tasks.filter(task => task.status === status);
   }
 
-  // TODO: finish implementation of update method
-  async update({ id, title, status, priority }: Partial<Task>) {
-    console.log({ id, title, status, priority });
+  async update(id: number, updatedFields: Partial<Task>) {
+    let tasks = await this.get();
+
+    const task = await this.checkIfTaskExists(id, tasks);
+
+    if (!task) return console.error(`${Colors.red}Error: Task not found.`);
+
+    const updatedTask = {
+      ...task,
+      ...updatedFields,
+      updatedAt: new Date().toISOString(),
+    };
+
+    tasks.splice(id - 1, 1, updatedTask);
+    await fs.writeFile(this.filePath, JSON.stringify(tasks, null, 2));
   }
 
-  // TODO: refactor delet method
   async delete(id: number) {
     let tasks = await this.get();
 
-    const task = tasks.find(task => task.id === id);
+    const task = await this.checkIfTaskExists(id, tasks);
 
     if (!task) return console.error(`${Colors.red}Error: Task not found.`);
 
     tasks = tasks.filter(task => task.id != id);
     await fs.writeFile(this.filePath, JSON.stringify(tasks, null, 2));
+  }
+
+  async checkIfTaskExists(id: number, tasks: Task[]) {
+    const task = tasks.find(task => task.id === id);
+
+    return task;
   }
 }
