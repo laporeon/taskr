@@ -7,15 +7,25 @@
     "sourceMap": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node16",
-    "module": "Node16",
+    "moduleResolution": "node",
+    "module": "CommonJS",
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "baseUrl": "./",
     "strict": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "paths": {
+      "@utils/*": ["./src/utils/*"],
+      "@interfaces/*": ["./src/interfaces/*"],
+      "@repositories/*": ["./src/repositories/*"],
+      "@services/*": ["./src/services/*"],
+      "@commands/*": ["./src/commands/*"],
+      "@enums/*": ["./src/enums/*"]
+    },
+    "noUnusedParameters": true,
+    "noUnusedLocals": true
   },
   "include": ["./src/**/*"],
-  "exclude": ["node_modules/**/*", "dist"]
+  "exclude": ["node_modules/**/*", "dist", "output"]
 }
