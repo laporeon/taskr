@@ -61,6 +61,7 @@ export class TaskRepository {
 
     tasks.splice(id - 1, 1, updatedTask);
     await fs.writeFile(this.filePath, JSON.stringify(tasks, null, 2));
+    console.log(`\n${Colors.green}✔ ${Colors.gray}Task successfully updated!`);
   }
 
   async delete(id: number) {
