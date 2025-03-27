@@ -13,11 +13,16 @@ program
   .addHelpText(
     'after',
     `\nExamples:
-  $ taskr add "Clean node_modules"
-  $ taskr add "Study" high
-  $ taskr add "Read article" medium
+  $ taskr add "Clean node_modules" 
+  $ taskr add "Study" -p high
+  $ taskr add "Read article" 
   $ taskr list
-  $ taskr list "todo"
+  $ taskr list -s "todo"
+  $ taskr update 5 -t "New Task Title"
+  $ taskr update 5 -p "high"
+  $ taskr update 5 -s "in-progress"
+  $ taskr update 5 -t "New Task Title -p "medium" -s "done"
+  $ taskr remove 2"
   `,
   )
   .showSuggestionAfterError();
