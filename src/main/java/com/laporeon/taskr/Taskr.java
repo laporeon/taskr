@@ -1,13 +1,21 @@
 package com.laporeon.taskr;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
-public class Taskr {
+import picocli.CommandLine;
+
+@CommandLine.Command(
+		name = "taskr",
+		description = "Says hello to user"
+)
+public class Taskr implements Runnable{
 
 	public static void main(String[] args) {
-		SpringApplication.run(Taskr.class, args);
+		int exitCode = new CommandLine(new Taskr()).execute(args);
+		System.exit(exitCode);
 	}
 
+	@Override
+	public void run() {
+		System.out.println("Hello World!");
+	}
 }
