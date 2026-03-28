@@ -28,6 +28,10 @@ public class Task {
 
     private Instant updatedAt;
 
+    public String toCsvString() {
+        return String.format("\n%s;%s,%s,%s;%s;%s;%s", id, title, description, status, priority, createdAt, updatedAt);
+    }
+
     public String toString() {
         return """
                %s. %s %s %s
