@@ -1,7 +1,8 @@
 package com.laporeon.taskr.commands;
 
-import com.laporeon.taskr.entities.Task;
+import com.laporeon.taskr.enums.Color;
 import com.laporeon.taskr.enums.TaskPriority;
+import com.laporeon.taskr.repositories.TaskRepository;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
@@ -11,12 +12,13 @@ import picocli.CommandLine.Command;
 )
 public class AddCommand implements Runnable {
 
+    private static final TaskRepository taskRepository = new TaskRepository();
+
     @CommandLine.Parameters(index = "0", description = "Task title")
     private String title;
 
     @CommandLine.Option(names = {"-d", "--description"},
-            description = "Optional task description",
-            defaultValue = "")
+            description = "Optional task description")
     private String description;
 
     @CommandLine.Option(names = {"-p", "--priority"},
@@ -25,13 +27,7 @@ public class AddCommand implements Runnable {
 
     @Override
     public void run() {
-        Task task = Task.builder()
-                .title(title)
-                .description(description)
-                .priority(TaskPriority.fromString(priority.toLowerCase()))
-                .build();
-
-        System.out.println("Task: " + task.toString());
-        System.out.println("\u001B[32m✔\u001B[0m Task successfully created!");
+        taskRepository.createTask(title, description, TaskPriority.fromString(priority.toLowerCase()));
+        System.out.printf("%s✔ Task successfully created!%s", Color.GREEN, Color.RESET);
     }
 }
