@@ -1,21 +1,20 @@
 package com.laporeon.taskr.entities;
 
+import com.laporeon.taskr.enums.Color;
 import com.laporeon.taskr.enums.TaskPriority;
 import com.laporeon.taskr.enums.TaskStatus;
 import lombok.Builder;
+import lombok.Getter;
 
 import java.time.Instant;
-import java.util.UUID;
 
 @Builder
+@Getter
 public class Task {
 
-    @Builder.Default
-    private UUID id = UUID.randomUUID();
+    private int id;
 
     private String title;
-
-    private String description;
 
     @Builder.Default
     private TaskStatus status = TaskStatus.TODO;
@@ -29,13 +28,36 @@ public class Task {
     private Instant updatedAt;
 
     public String toCsvString() {
-        return String.format("\n%s;%s,%s,%s;%s;%s;%s", id, title, description, status, priority, createdAt, updatedAt);
+        return String.format(
+                "%s;%s;%s;%s;%s;%s",
+                id,
+                title,
+                status.getValue(),
+                priority.getValue(),
+                createdAt,
+                updatedAt
+        );
     }
 
+    @Override
     public String toString() {
-        return """
-               %s. %s %s %s
-               """.formatted(id, title, status.getSymbol(), priority.getSymbol());
+        String rawId = String.format("%s.", id);
+
+        String displayId = (status == TaskStatus.DONE)
+                ? Color.GRAY.apply(rawId)
+                : rawId;
+
+        String displayTitle = (status == TaskStatus.DONE)
+                ? Color.GRAY_STRIKETHROUGH.apply(title)
+                : title;
+
+        return String.format(
+                "%s %s %s %s",
+                displayId,
+                status.getColoredSymbol(),
+                displayTitle,
+                priority.getColoredSymbol()
+        );
     }
 
 }
