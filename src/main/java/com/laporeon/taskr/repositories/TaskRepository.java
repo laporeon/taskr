@@ -10,10 +10,8 @@ import java.util.List;
 public class TaskRepository {
 
     public void createTask(String title, TaskStatus status, TaskPriority priority) {
-        int lastIndex = getLastIndex();
-
         Task task = Task.builder()
-                .id(lastIndex + 1)
+                .id(getNextId())
                 .title(title)
                 .status(status)
                 .priority(priority)
@@ -26,8 +24,8 @@ public class TaskRepository {
         return FileStorageHandler.readFile();
     }
 
-    private Integer getLastIndex() {
-        return listTasks().size();
+    private Integer getNextId() {
+        return listTasks().size() + 1;
     }
 
 }
