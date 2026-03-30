@@ -1,7 +1,9 @@
 package com.laporeon.taskr;
 
 import com.laporeon.taskr.commands.AddCommand;
+import com.laporeon.taskr.commands.ListCommand;
 import com.laporeon.taskr.enums.Color;
+import com.laporeon.taskr.repositories.TaskRepository;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
@@ -9,11 +11,14 @@ import picocli.CommandLine.Command;
 		name = "taskr",
 		description = "Java-based CLI to manage tasks"
 )
-public class Taskr implements Runnable{
+public class Taskr implements Runnable {
 
 	public static void main(String[] args) {
+		TaskRepository taskRepository = new TaskRepository();
+
 		CommandLine commandLine = new CommandLine(new Taskr())
-				.addSubcommand("add", new AddCommand())
+				.addSubcommand("add", new AddCommand(taskRepository))
+				.addSubcommand("list", new ListCommand(taskRepository))
 				.setExecutionExceptionHandler((ex, cmd, parseResult) -> {
 					System.err.printf("%s✘ %s %s", Color.RED, ex.getMessage(), Color.RESET);
 					return 1;
