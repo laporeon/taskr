@@ -41,11 +41,11 @@ public class Task {
 
     @Override
     public String toString() {
-        String rawId = String.format("%s.", id);
+        String formattedId = String.format("%s.", id);
 
         String displayId = (status == TaskStatus.DONE)
-                ? Color.GRAY.apply(rawId)
-                : rawId;
+                ? Color.GRAY.apply(formattedId)
+                : formattedId;
 
         String displayTitle = (status == TaskStatus.DONE)
                 ? Color.GRAY_STRIKETHROUGH.apply(title)
