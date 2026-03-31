@@ -16,6 +16,7 @@ import java.util.List;
 
 public class FileStorageHandler {
 
+    private static final String FILE_HEADER = "ID;TITLE;STATUS;PRIORITY;CREATED_AT;UPDATED_AT\n";
     private static final Path FILE_PATH = Paths.get("files", "tasks.txt");
 
     public static void saveToFile(Task task) {
@@ -54,4 +55,18 @@ public class FileStorageHandler {
         }
     }
 
+    public static void overwriteFileContent(List<Task> tasks) {
+        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(FILE_PATH)) {
+            bufferedWriter.write(FILE_HEADER);
+
+            for (Task task : tasks) {
+                String taskCsvString = task.toCsvString();
+                bufferedWriter.write(taskCsvString);
+                bufferedWriter.newLine();
+            }
+
+        } catch (IOException exception) {
+            throw new RuntimeException("Error while trying to update file: " + exception.getMessage(), exception);
+        }
+    }
 }
