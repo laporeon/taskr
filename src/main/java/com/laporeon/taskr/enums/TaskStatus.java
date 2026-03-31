@@ -9,7 +9,7 @@ public enum TaskStatus {
 
     TODO("todo", "[ ]", Color.ORANGE),
     IN_PROGRESS("in-progress", "[~]", Color.BLUE),
-    DONE("done","[✓]", Color.GREEN);         // Green
+    DONE("done","[✓]", Color.GREEN);
 
     private final String value;
     private final String symbol;
