@@ -26,6 +26,19 @@ public class TaskRepository {
         return FileStorageHandler.readFile();
     }
 
+    public void updateTask(int id, String title, TaskStatus status, TaskPriority priority) {
+        List<Task> tasks = FileStorageHandler.readFile();
+
+        Task task = tasks.stream()
+                         .filter(t -> t.getId() == id)
+                         .findFirst()
+                         .orElseThrow(() -> new IllegalArgumentException(String.format(INVALID_ID_MESSAGE, id)));
+
+        task.update(title, status, priority);
+
+        FileStorageHandler.overwriteFileContent(tasks);
+    }
+
     public void deleteTask(int id) {
         List<Task> tasks = FileStorageHandler.readFile();
 
