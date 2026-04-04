@@ -27,6 +27,14 @@ public class Task {
 
     private Instant updatedAt;
 
+    public void update(String title, TaskStatus status, TaskPriority priority) {
+        if (title != null) this.title = title;
+        if (status != null) this.status = status;
+        if (priority != null) this.priority = priority;
+
+        this.updatedAt = Instant.now();
+    }
+
     public String toCsvString() {
         return String.format(
                 "%s;%s;%s;%s;%s;%s",
