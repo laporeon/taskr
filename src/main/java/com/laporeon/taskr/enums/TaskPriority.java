@@ -28,6 +28,8 @@ public enum TaskPriority {
     private static final String INVALID_PRIORITY_VALUE_ERROR = "Invalid priority '%s'. Valid options are: low, medium or high";
 
     public static TaskPriority fromString(String priority) {
+        if (priority == null) return null;
+
         return Arrays.stream(TaskPriority.values())
                 .filter(p -> p.value.equalsIgnoreCase(priority))
                 .findFirst()

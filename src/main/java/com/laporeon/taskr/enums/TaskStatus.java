@@ -28,6 +28,8 @@ public enum TaskStatus {
     private static final String INVALID_STATUS_VALUE_ERROR = "Invalid status '%s'. Valid options are: todo, in-progress or done";
 
     public static TaskStatus fromString(String status) {
+        if (status == null) return null;
+
         return Arrays.stream(TaskStatus.values())
                 .filter(s -> s.value.equalsIgnoreCase(status))
                 .findFirst()
