@@ -11,13 +11,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class FileStorageHandler {
 
     private static final String FILE_HEADER = "ID;TITLE;STATUS;PRIORITY;CREATED_AT;UPDATED_AT\n";
     private static final Path FILE_PATH = Paths.get("files", "tasks.txt");
+    private static final int TASK_ATTRIBUTES_SIZE = FILE_HEADER.split(";").length;
+    private static final String INVALID_ATTRIBUTES_SIZE_MESSAGE = "Invalid file format. Expected %d columns but got %d instead";
 
     public static void saveToFile(Task task) {
         try (BufferedWriter bufferedWriter = Files.newBufferedWriter(FILE_PATH, StandardOpenOption.APPEND)) {
@@ -37,13 +41,21 @@ public class FileStorageHandler {
 
             String line;
             while ((line = reader.readLine()) != null) {
+                if (line.isBlank()) continue;
+
                 String[] attributes = line.split(";", -1);
 
+                if (attributes.length < TASK_ATTRIBUTES_SIZE) {
+                    throw new RuntimeException(INVALID_ATTRIBUTES_SIZE_MESSAGE.formatted(TASK_ATTRIBUTES_SIZE, attributes.length));
+                }
+
                 Task task = Task.builder()
-                        .id(Integer.parseInt(attributes[0]))
+                        .id(UUID.fromString(attributes[0]))
                         .title(attributes[1])
                         .status(TaskStatus.fromString(attributes[2]))
                         .priority(TaskPriority.fromString(attributes[3]))
+                        .createdAt(Instant.parse(attributes[4]))
+                        .updatedAt(Instant.parse(attributes[4]))
                         .build();
 
                 tasks.add(task);
