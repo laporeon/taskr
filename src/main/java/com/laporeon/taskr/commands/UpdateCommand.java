@@ -10,7 +10,7 @@ import picocli.CommandLine.Command;
 
 @Command(
         name = "update",
-        description = "Update task status or title by its unique id"
+        description = "Update a task by its index (1-based): title, status, and/or priority"
 )
 public class UpdateCommand implements Runnable {
 
@@ -20,10 +20,10 @@ public class UpdateCommand implements Runnable {
         this.taskRepository = taskRepository;
     }
 
-    @CommandLine.Option(names = {"-i", "--id"},
-            description = "Task id",
+    @CommandLine.Option(names = {"-i", "--index"},
+            description = "Task index",
             required = true)
-    private int id;
+    private int index;
 
     @CommandLine.Option(names = {"-t", "--title"},
             description = "New task title",
@@ -40,7 +40,7 @@ public class UpdateCommand implements Runnable {
 
     @Override
     public void run() {
-        taskRepository.updateTask(id, title, TaskStatus.fromString(status), TaskPriority.fromString(priority));
+        taskRepository.updateTask(index, title, TaskStatus.fromString(status), TaskPriority.fromString(priority));
         System.out.printf("%s✔ Task successfully updated!%s", Color.GREEN, Color.RESET);
     }
 
