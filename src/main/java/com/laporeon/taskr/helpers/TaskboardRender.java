@@ -7,6 +7,7 @@ import com.laporeon.taskr.enums.TaskStatus;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class TaskboardRender {
 
@@ -18,21 +19,27 @@ public class TaskboardRender {
         long inProgress = countByStatus.getOrDefault(TaskStatus.IN_PROGRESS, 0L);
         long done = countByStatus.getOrDefault(TaskStatus.DONE, 0L);
 
-        StringBuilder sb = new StringBuilder();
+        return renderHeader() + renderBody(tasks) + renderSummary(todo, inProgress, done);
+    }
 
-        sb.append("\n")
-          .append(Color.BOLD_UNDERLINE)
-          .append("Tasks")
-          .append(Color.RESET)
-          .append("\n\n");
+    private static String renderHeader() {
+        return "\n" + Color.BOLD_UNDERLINE + "Tasks" + Color.RESET + "\n\n";
+    }
 
-        tasks.stream()
-             .map(Task::toString)
-             .forEach(task -> sb.append("  ").append(task).append("\n"));
+    private static String renderBody(List<Task> tasks) {
+        return IntStream.range(0, tasks.size())
+                        .mapToObj(index -> renderTaskLine(index + 1, tasks.get(index)))
+                        .collect(Collectors.joining());
+    }
 
-        sb.append(renderSummary(todo, inProgress, done));
+    private static String renderTaskLine(int index, Task task) {
+        String formattedIndex = index + ". ";
 
-        return sb.toString();
+        String displayIndex = (task.getStatus() == TaskStatus.DONE)
+                ? Color.GRAY.apply(formattedIndex)
+                : formattedIndex;
+
+        return " " + displayIndex + task + "\n";
     }
 
     private static String renderSummary(long todo, long inProgress, long done) {
@@ -44,4 +51,6 @@ public class TaskboardRender {
                 Color.RESET
         );
     }
+
+
 }
