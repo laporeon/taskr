@@ -7,24 +7,17 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.Instant;
+import java.util.UUID;
 
 @Builder
 @Getter
 public class Task {
 
-    private int id;
-
+    private UUID id;
     private String title;
-
-    @Builder.Default
-    private TaskStatus status = TaskStatus.TODO;
-
-    @Builder.Default
-    private TaskPriority priority = TaskPriority.LOW;
-
-    @Builder.Default
-    private Instant createdAt = Instant.now();
-
+    private TaskStatus status;
+    private TaskPriority priority;
+    private Instant createdAt;
     private Instant updatedAt;
 
     public void update(String title, TaskStatus status, TaskPriority priority) {
@@ -49,19 +42,12 @@ public class Task {
 
     @Override
     public String toString() {
-        String formattedId = String.format("%s.", id);
-
-        String displayId = (status == TaskStatus.DONE)
-                ? Color.GRAY.apply(formattedId)
-                : formattedId;
-
         String displayTitle = (status == TaskStatus.DONE)
                 ? Color.GRAY_STRIKETHROUGH.apply(title)
                 : title;
 
         return String.format(
-                "%s %s %s %s",
-                displayId,
+                "%s %s %s",
                 status.getColoredSymbol(),
                 displayTitle,
                 priority.getColoredSymbol()
