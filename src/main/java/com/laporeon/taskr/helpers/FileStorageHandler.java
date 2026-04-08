@@ -3,6 +3,7 @@ package com.laporeon.taskr.helpers;
 import com.laporeon.taskr.entities.Task;
 import com.laporeon.taskr.enums.TaskPriority;
 import com.laporeon.taskr.enums.TaskStatus;
+import com.laporeon.taskr.exceptions.TaskStorageException;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -25,11 +26,11 @@ public class FileStorageHandler {
 
     public static void saveToFile(Task task) {
         try (BufferedWriter bufferedWriter = Files.newBufferedWriter(FILE_PATH, StandardOpenOption.APPEND)) {
-            String taskToCsvString = task.toCsvString();
+            String taskToCsvString = TaskSerializer.toCsvString(task);
             bufferedWriter.write(taskToCsvString);
             bufferedWriter.newLine();
         } catch (IOException ex) {
-            throw new RuntimeException("Error saving to file: " + ex.getMessage(), ex);
+            throw new TaskStorageException("Error saving to file: " + ex.getMessage());
         }
     }
 
@@ -46,7 +47,7 @@ public class FileStorageHandler {
                 String[] attributes = line.split(";", -1);
 
                 if (attributes.length < TASK_ATTRIBUTES_SIZE) {
-                    throw new RuntimeException(INVALID_ATTRIBUTES_SIZE_MESSAGE.formatted(TASK_ATTRIBUTES_SIZE, attributes.length));
+                    throw new TaskStorageException(INVALID_ATTRIBUTES_SIZE_MESSAGE.formatted(TASK_ATTRIBUTES_SIZE, attributes.length));
                 }
 
                 Task task = Task.builder()
@@ -55,7 +56,7 @@ public class FileStorageHandler {
                         .status(TaskStatus.fromString(attributes[2]))
                         .priority(TaskPriority.fromString(attributes[3]))
                         .createdAt(Instant.parse(attributes[4]))
-                        .updatedAt(Instant.parse(attributes[4]))
+                        .updatedAt(Instant.parse(attributes[5]))
                         .build();
 
                 tasks.add(task);
@@ -63,7 +64,7 @@ public class FileStorageHandler {
 
             return tasks;
         } catch (IOException ex) {
-            throw new RuntimeException("Error reading file: " + ex.getMessage(), ex);
+            throw new TaskStorageException("Error reading file: " + ex.getMessage());
         }
     }
 
@@ -72,13 +73,14 @@ public class FileStorageHandler {
             bufferedWriter.write(FILE_HEADER);
 
             for (Task task : tasks) {
-                String taskCsvString = task.toCsvString();
+                String taskCsvString = TaskSerializer.toCsvString(task);
                 bufferedWriter.write(taskCsvString);
                 bufferedWriter.newLine();
             }
 
         } catch (IOException exception) {
-            throw new RuntimeException("Error while trying to update file: " + exception.getMessage(), exception);
+            throw new TaskStorageException("Error while trying to update file: " + exception.getMessage());
         }
     }
+
 }
