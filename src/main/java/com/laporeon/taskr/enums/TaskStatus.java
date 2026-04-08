@@ -1,5 +1,6 @@
 package com.laporeon.taskr.enums;
 
+import com.laporeon.taskr.exceptions.InvalidArgumentException;
 import lombok.Getter;
 
 import java.util.Arrays;
@@ -33,6 +34,6 @@ public enum TaskStatus {
         return Arrays.stream(TaskStatus.values())
                 .filter(s -> s.value.equalsIgnoreCase(status))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(INVALID_STATUS_VALUE_ERROR.formatted(status)));
+                .orElseThrow(() -> new InvalidArgumentException(INVALID_STATUS_VALUE_ERROR.formatted(status)));
     }
 }

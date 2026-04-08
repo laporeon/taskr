@@ -1,5 +1,6 @@
 package com.laporeon.taskr.enums;
 
+import com.laporeon.taskr.exceptions.InvalidArgumentException;
 import lombok.Getter;
 
 import java.util.Arrays;
@@ -33,6 +34,6 @@ public enum TaskPriority {
         return Arrays.stream(TaskPriority.values())
                 .filter(p -> p.value.equalsIgnoreCase(priority))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(INVALID_PRIORITY_VALUE_ERROR.formatted(priority)));
+                .orElseThrow(() -> new InvalidArgumentException(INVALID_PRIORITY_VALUE_ERROR.formatted(priority)));
     }
 }
