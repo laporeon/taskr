@@ -1,6 +1,5 @@
 package com.laporeon.taskr.entities;
 
-import com.laporeon.taskr.enums.Color;
 import com.laporeon.taskr.enums.TaskPriority;
 import com.laporeon.taskr.enums.TaskStatus;
 import lombok.Builder;
@@ -26,32 +25,6 @@ public class Task {
         if (priority != null) this.priority = priority;
 
         this.updatedAt = Instant.now();
-    }
-
-    public String toCsvString() {
-        return String.format(
-                "%s;%s;%s;%s;%s;%s",
-                id,
-                title,
-                status.getValue(),
-                priority.getValue(),
-                createdAt,
-                updatedAt
-        );
-    }
-
-    @Override
-    public String toString() {
-        String displayTitle = (status == TaskStatus.DONE)
-                ? Color.GRAY_STRIKETHROUGH.apply(title)
-                : title;
-
-        return String.format(
-                "%s %s %s",
-                status.getColoredSymbol(),
-                displayTitle,
-                priority.getColoredSymbol()
-        );
     }
 
 }
