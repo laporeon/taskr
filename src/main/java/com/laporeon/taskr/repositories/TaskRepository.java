@@ -5,24 +5,11 @@ import com.laporeon.taskr.enums.TaskPriority;
 import com.laporeon.taskr.enums.TaskStatus;
 import com.laporeon.taskr.helpers.FileStorageHandler;
 
-import java.time.Instant;
 import java.util.List;
-import java.util.UUID;
 
 public class TaskRepository {
 
-    private static final String INVALID_INDEX_MESSAGE = "Invalid or missing task index: %d. Please try again...";
-
-    public void createTask(String title, TaskStatus status, TaskPriority priority) {
-        Task task = Task.builder()
-                .id(UUID.randomUUID())
-                .title(title)
-                .status(status)
-                .priority(priority)
-                .createdAt(Instant.now())
-                .updatedAt(Instant.now())
-                .build();
-
+    public void save(Task task) {
         FileStorageHandler.saveToFile(task);
     }
 
@@ -30,7 +17,7 @@ public class TaskRepository {
         return FileStorageHandler.readFile();
     }
 
-    public void updateTask(int index, String title, TaskStatus status, TaskPriority priority) {
+    public void update(int index, String title, TaskStatus status, TaskPriority priority) {
         List<Task> tasks = FileStorageHandler.readFile();
 
         Task task = getTaskByIndex(tasks, index);
@@ -39,7 +26,7 @@ public class TaskRepository {
         FileStorageHandler.overwriteFileContent(tasks);
     }
 
-    public void deleteTask(int index) {
+    public void delete(int index) {
         List<Task> tasks = FileStorageHandler.readFile();
 
         Task task = getTaskByIndex(tasks, index);
@@ -49,12 +36,6 @@ public class TaskRepository {
     }
 
     private Task getTaskByIndex(List<Task> tasks, int index) {
-        int size = tasks.size();
-
-        if (index < 1 || index > size) {
-            throw new IllegalArgumentException(String.format(INVALID_INDEX_MESSAGE, index));
-        }
-
         return tasks.get(index - 1);
     }
 }
