@@ -3,7 +3,7 @@ package com.laporeon.taskr.commands;
 import com.laporeon.taskr.enums.Color;
 import com.laporeon.taskr.enums.TaskPriority;
 import com.laporeon.taskr.enums.TaskStatus;
-import com.laporeon.taskr.repositories.TaskRepository;
+import com.laporeon.taskr.services.TaskService;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
@@ -14,10 +14,10 @@ import picocli.CommandLine.Command;
 )
 public class UpdateCommand implements Runnable {
 
-    private final TaskRepository taskRepository;
+    private final TaskService taskService;
 
-    public UpdateCommand(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
+    public UpdateCommand(TaskService taskService) {
+        this.taskService = taskService;
     }
 
     @CommandLine.Option(names = {"-i", "--index"},
@@ -26,8 +26,7 @@ public class UpdateCommand implements Runnable {
     private int index;
 
     @CommandLine.Option(names = {"-t", "--title"},
-            description = "New task title",
-            required = true)
+            description = "New task title")
     private String title;
 
     @CommandLine.Option(names = {"-s", "--status"},
@@ -40,7 +39,7 @@ public class UpdateCommand implements Runnable {
 
     @Override
     public void run() {
-        taskRepository.updateTask(index, title, TaskStatus.fromString(status), TaskPriority.fromString(priority));
+        taskService.updateTask(index, title, TaskStatus.fromString(status), TaskPriority.fromString(priority));
         System.out.printf("%s✔ Task successfully updated!%s", Color.GREEN, Color.RESET);
     }
 

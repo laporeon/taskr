@@ -1,7 +1,7 @@
 package com.laporeon.taskr.commands;
 
 import com.laporeon.taskr.enums.Color;
-import com.laporeon.taskr.repositories.TaskRepository;
+import com.laporeon.taskr.services.TaskService;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
@@ -11,20 +11,20 @@ import picocli.CommandLine.Command;
 )
 public class DeleteCommand implements Runnable {
 
-    private final TaskRepository taskRepository;
+    private final TaskService taskService;
+
+    public DeleteCommand(TaskService taskService) {
+        this.taskService = taskService;
+    }
 
     @CommandLine.Option(names = {"-i", "--index"},
             description = "Task index",
             required = true)
     private int index;
 
-    public DeleteCommand(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
-    }
-
     @Override
     public void run() {
-        taskRepository.deleteTask(index);
+        taskService.deleteTask(index);
         System.out.printf("%s✔ Task successfully deleted!%s", Color.GREEN, Color.RESET);
     }
 }
