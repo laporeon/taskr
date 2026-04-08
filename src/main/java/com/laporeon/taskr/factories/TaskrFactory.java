@@ -12,19 +12,28 @@ import picocli.CommandLine;
 
 public class TaskrFactory {
 
+    private static final int HELP_WIDTH = 160;
+
     public static CommandLine create() {
+
         TaskRepository taskRepository = new TaskRepository();
         TaskService taskService = new TaskService(taskRepository);
 
-        return new CommandLine(new Taskr())
+        CommandLine cmd = new CommandLine(new Taskr())
+                .setUsageHelpWidth(HELP_WIDTH)
                 .addSubcommand("add", new AddCommand(taskService))
                 .addSubcommand("delete", new DeleteCommand(taskService))
                 .addSubcommand("list", new ListCommand(taskService))
                 .addSubcommand("update", new UpdateCommand(taskService))
-                .setExecutionExceptionHandler((ex, cmd, parseResult) -> {
+                .setExecutionExceptionHandler((ex, c, parseResult) -> {
                     System.err.printf("%s✘ %s %s%n", Color.RED, ex.getMessage(), Color.RESET);
                     return 1;
                 });
+
+        // Ensure consistent help wrapping for subcommands: root help width is not always inherited.
+        cmd.getSubcommands().values().forEach(sub -> sub.setUsageHelpWidth(HELP_WIDTH));
+
+        return cmd;
     }
 
 }
