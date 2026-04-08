@@ -6,7 +6,9 @@ import picocli.CommandLine.Command;
 
 @Command(
 		name = "taskr",
-		description = "Java-based CLI to manage tasks"
+		description = "Java-based CLI to manage tasks",
+		version = "1.0.0",
+		mixinStandardHelpOptions = true
 )
 public class Taskr implements Runnable {
 
