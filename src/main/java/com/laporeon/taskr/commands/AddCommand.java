@@ -9,7 +9,8 @@ import picocli.CommandLine.Command;
 
 @Command(
         name = "add",
-        description = "Creates a new task."
+        description = "Creates a new task.",
+        mixinStandardHelpOptions = true
 )
 public class AddCommand implements Runnable {
 
@@ -19,17 +20,24 @@ public class AddCommand implements Runnable {
         this.taskService = taskService;
     }
 
-    @CommandLine.Parameters(index = "0", description = "Task title")
+    @CommandLine.Parameters(index = "0", paramLabel = "TITLE", description = "Task title")
     private String title;
 
-    @CommandLine.Option(names = {"-s", "--status"},
-            description = "Optional task status (todo, in-progress,done). Default: todo",
-            defaultValue = "todo")
+    @CommandLine.Option(
+            names = {"-s", "--status"},
+            paramLabel = "STATE",
+            description = "Optional task status (todo, in-progress, done). Default: ${DEFAULT-VALUE}",
+            defaultValue = "todo",
+            showDefaultValue = CommandLine.Help.Visibility.NEVER
+    )
     private String status;
 
     @CommandLine.Option(names = {"-p", "--priority"},
-            description = "Optional task priority (low, medium, high). Default: low",
-            defaultValue = "low")
+            paramLabel = "LEVEL",
+            description = "Optional task priority (low, medium, high). Default: ${DEFAULT-VALUE}",
+            defaultValue = "low",
+            showDefaultValue = CommandLine.Help.Visibility.NEVER
+    )
     private String priority;
 
     @Override

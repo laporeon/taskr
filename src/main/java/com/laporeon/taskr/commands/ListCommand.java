@@ -9,7 +9,8 @@ import java.util.List;
 
 @Command(
         name = "list",
-        description = "List all tasks."
+        description = "List all tasks.",
+        mixinStandardHelpOptions = true
 )
 public class ListCommand implements Runnable {
 

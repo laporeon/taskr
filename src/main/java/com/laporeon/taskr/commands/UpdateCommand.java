@@ -10,7 +10,8 @@ import picocli.CommandLine.Command;
 
 @Command(
         name = "update",
-        description = "Update a task by its index (1-based): title, status, and/or priority"
+        description = "Update a task by its index (1-based): title, status, and/or priority",
+        mixinStandardHelpOptions = true
 )
 public class UpdateCommand implements Runnable {
 
@@ -20,21 +21,27 @@ public class UpdateCommand implements Runnable {
         this.taskService = taskService;
     }
 
-    @CommandLine.Option(names = {"-i", "--index"},
-            description = "Task index",
-            required = true)
+    @CommandLine.Option(
+            names = {"-i", "--index"},
+            paramLabel = "INDEX",
+            description = "Task index (1-based)",
+            required = true
+    )
     private int index;
 
     @CommandLine.Option(names = {"-t", "--title"},
+            paramLabel = "TITLE",
             description = "New task title")
     private String title;
 
     @CommandLine.Option(names = {"-s", "--status"},
-            description = "Optional new task status.")
+            paramLabel = "STATE",
+            description = "New task status (todo, in-progress, done)")
     private String status;
 
     @CommandLine.Option(names = {"-p", "--priority"},
-            description = "Optional new task priority (low, medium, high)")
+            paramLabel = "LEVEL",
+            description = "New task priority (low, medium, high)")
     private String priority;
 
     @Override

@@ -7,7 +7,8 @@ import picocli.CommandLine.Command;
 
 @Command(
         name = "delete",
-        description = "Delete a task by its index (1-based)"
+        description = "Delete a task by its index (1-based)",
+        mixinStandardHelpOptions = true
 )
 public class DeleteCommand implements Runnable {
 
@@ -17,9 +18,12 @@ public class DeleteCommand implements Runnable {
         this.taskService = taskService;
     }
 
-    @CommandLine.Option(names = {"-i", "--index"},
-            description = "Task index",
-            required = true)
+    @CommandLine.Option(
+            names = {"-i", "--index"},
+            paramLabel = "INDEX",
+            description = "Task index (1-based)",
+            required = true
+    )
     private int index;
 
     @Override
