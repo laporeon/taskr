@@ -19,21 +19,19 @@ public class TaskSerializer {
     }
 
     public static String toDisplayString(Task task, int index) {
-        String formattedIndex = index + ".";
+        String formattedIndex = (task.getStatus() == TaskStatus.DONE)
+                ? Color.GRAY.apply(index + ".")
+                : index + ".";
 
-        String displayIndex = (task.getStatus() == TaskStatus.DONE)
-                ? Color.GRAY.apply(formattedIndex)
-                : formattedIndex;
-
-        String displayTitle = (task.getStatus() == TaskStatus.DONE)
+        String formattedTitle = (task.getStatus() == TaskStatus.DONE)
                 ? Color.GRAY_STRIKETHROUGH.apply(task.getTitle())
                 : task.getTitle();
 
         return String.format(
                 "%s %s %s %s",
-                displayIndex,
+                formattedIndex,
                 task.getStatus().getColoredSymbol(),
-                displayTitle,
+                formattedTitle,
                 task.getPriority().getColoredSymbol()
         );
     }
