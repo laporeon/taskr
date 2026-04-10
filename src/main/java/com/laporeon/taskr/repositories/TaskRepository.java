@@ -13,6 +13,13 @@ public class TaskRepository {
         FileStorageHandler.saveToFile(task);
     }
 
+    public List<Task> listTasksByStatus(TaskStatus status) {
+        return FileStorageHandler.readFile()
+                                 .stream()
+                                 .filter(t -> t.getStatus().equals(status))
+                                 .toList();
+    }
+
     public List<Task> listTasks() {
         return FileStorageHandler.readFile();
     }
