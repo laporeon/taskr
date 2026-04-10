@@ -33,16 +33,20 @@ public class TaskboardRender {
     }
 
     private static String renderTaskLine(int index, Task task) {
-        String serializedTask = TaskSerializer.toDisplayString(task, index);
-        return "  " + serializedTask + "\n";
+        return "  " + TaskSerializer.toDisplayString(task, index) + "\n";
     }
 
 
     private static String renderSummary(long todo, long inProgress, long done) {
-        return "\n" + Color.ORANGE + todo + Color.RESET + " todo" + " · " +
-                Color.BLUE + inProgress + Color.RESET + " in-progress" + " · " +
-                Color.GREEN + done + Color.RESET + " done\n";
+        return  "\n" + formatStatusCount(todo, Color.YELLOW, "todo") + " · " +
+                        formatStatusCount(inProgress, Color.BLUE, "in-progress") + " · " +
+                        formatStatusCount(done, Color.GREEN, "done") + "\n";
 
+
+    }
+
+    private static String formatStatusCount(long count, Color color, String label) {
+        return color + String.valueOf(count) + Color.RESET + " " + label;
     }
 
 }
