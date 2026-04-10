@@ -31,8 +31,13 @@ public class TaskService {
         taskRepository.save(task);
     }
 
-    public List<Task> listTasks() {
-        return taskRepository.listTasks();
+    public List<Task> listTasks(TaskStatus status) {
+
+        if (status == null) {
+            return taskRepository.listTasks();
+        }
+
+        return taskRepository.listTasksByStatus(status);
     }
 
     public void updateTask(int index, String title, TaskStatus status, TaskPriority priority) {
