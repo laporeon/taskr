@@ -11,12 +11,11 @@
 - [About](#about)
 - [Requirements](#requirements)
 - [Getting Started](#getting-started)
-  - [Configuring](#configuring)
-- [Usage](#usage)
-  - [Starting](#starting)
-    - [Linux/MacOS](#linuxmacos)
+  - [Building](#building)
+  - [Running](#running)
+    - [Linux and macOS](#linux-and-macos)
     - [Windows](#windows)
-  - [Examples](#examples)
+- [Usage](#usage)
 - [Preview](#preview)
 
 ## About
@@ -38,7 +37,7 @@ Taskr is a Java-based CLI to easily manage your tasks through your terminal.
 
 ## Getting Started
 
-### Configuring
+### Building
 
 After cloning this repository, build the project using Maven:
 
@@ -48,13 +47,11 @@ $ mvn clean package
 
 This will create an executable JAR file at `target/taskr.jar`.
 
-## Usage
+### Running
 
-### Starting
+#### Linux and macOS
 
-#### Linux/MacOS
-
-On Linux and macOS, you have several options to start the application:
+On Linux and macOS, you have several options to run the application:
 
 - Option 1: Direct JAR execution
 
@@ -99,7 +96,9 @@ Then reload your profile (`. $PROFILE`) or restart your terminal.
 
 Now you can use `taskr` from anywhere in your terminal.
 
-### Examples
+## Usage
+
+For the most up-to-date usage, run `taskr --help`.
 
 ```text
 Usage: taskr [command] [options]
