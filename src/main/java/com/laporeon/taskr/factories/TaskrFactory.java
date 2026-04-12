@@ -25,9 +25,15 @@ public class TaskrFactory {
                 .addSubcommand("delete", new DeleteCommand(taskService))
                 .addSubcommand("list", new ListCommand(taskService))
                 .addSubcommand("update", new UpdateCommand(taskService))
+                .setParameterExceptionHandler((ex, args) -> {
+                    String helpCommand = ex.getCommandLine().getCommandSpec().qualifiedName() + " --help";
+                    System.err.printf("%s✘ %s%s%n", Color.RED, ex.getMessage(), Color.RESET);
+                    System.err.printf("Use '%s' to see usage", helpCommand);
+                    return ex.getCommandLine().getCommandSpec().exitCodeOnInvalidInput();
+                })
                 .setExecutionExceptionHandler((ex, c, parseResult) -> {
                     System.err.printf("%s✘ %s %s%n", Color.RED, ex.getMessage(), Color.RESET);
-                    return 1;
+                    return c.getCommandSpec().exitCodeOnExecutionException();
                 });
 
         // Ensure consistent help wrapping for subcommands: root help width is not always inherited.
