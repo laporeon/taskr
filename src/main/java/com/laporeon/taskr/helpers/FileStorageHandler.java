@@ -19,7 +19,7 @@ import java.util.UUID;
 
 public class FileStorageHandler {
 
-    private static final String FILE_HEADER = "ID;TITLE;STATUS;PRIORITY;CREATED_AT;UPDATED_AT\n";
+    private static final String FILE_HEADER = "ID;TITLE;STATUS;PRIORITY;CREATED_AT;UPDATED_AT";
     private static final Path FILE_PATH = Paths.get("files", "tasks.txt");
     private static final int TASK_ATTRIBUTES_SIZE = FILE_HEADER.split(";").length;
     private static final String INVALID_ATTRIBUTES_SIZE_MESSAGE = "Invalid file format. Expected %d columns but got %d instead";
@@ -27,8 +27,8 @@ public class FileStorageHandler {
     public static void saveToFile(Task task) {
         try (BufferedWriter bufferedWriter = Files.newBufferedWriter(FILE_PATH, StandardOpenOption.APPEND)) {
             String taskToCsvString = TaskSerializer.toCsvString(task);
-            bufferedWriter.write(taskToCsvString);
             bufferedWriter.newLine();
+            bufferedWriter.write(taskToCsvString);
         } catch (IOException ex) {
             throw new TaskStorageException("Error saving to file: " + ex.getMessage());
         }
@@ -46,7 +46,7 @@ public class FileStorageHandler {
 
                 String[] attributes = line.split(";", -1);
 
-                if (attributes.length < TASK_ATTRIBUTES_SIZE) {
+                if (attributes.length != TASK_ATTRIBUTES_SIZE) {
                     throw new TaskStorageException(INVALID_ATTRIBUTES_SIZE_MESSAGE.formatted(TASK_ATTRIBUTES_SIZE, attributes.length));
                 }
 
@@ -71,6 +71,7 @@ public class FileStorageHandler {
     public static void overwriteFileContent(List<Task> tasks) {
         try (BufferedWriter bufferedWriter = Files.newBufferedWriter(FILE_PATH)) {
             bufferedWriter.write(FILE_HEADER);
+            bufferedWriter.newLine();
 
             for (Task task : tasks) {
                 String taskCsvString = TaskSerializer.toCsvString(task);
