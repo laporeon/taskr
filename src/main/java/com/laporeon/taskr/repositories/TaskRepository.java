@@ -27,7 +27,7 @@ public class TaskRepository {
     public void update(int index, String title, TaskStatus status, TaskPriority priority) {
         List<Task> tasks = FileStorageHandler.readFile();
 
-        Task task = getTaskByIndex(tasks, index);
+        Task task = tasks.get(index - 1);
         task.update(title, status, priority);
 
         FileStorageHandler.overwriteFileContent(tasks);
@@ -36,13 +36,10 @@ public class TaskRepository {
     public void delete(int index) {
         List<Task> tasks = FileStorageHandler.readFile();
 
-        Task task = getTaskByIndex(tasks, index);
+        Task task = tasks.get(index - 1);
         tasks.remove(task);
 
         FileStorageHandler.overwriteFileContent(tasks);
     }
 
-    private Task getTaskByIndex(List<Task> tasks, int index) {
-        return tasks.get(index - 1);
-    }
 }
