@@ -41,18 +41,10 @@ public class TaskService {
     }
 
     public void updateTask(int index, String title, TaskStatus status, TaskPriority priority) {
-        boolean hasTitle = title != null && !title.isBlank();
-        boolean hasStatus = status != null;
-        boolean hasPriority = priority != null;
-
-        if (!hasTitle && !hasStatus && !hasPriority) {
-            throw new InvalidArgumentException("Provide at least one field to update: title, status, or priority.");
-        }
-
         validateIndex(index);
+        validateUpdateOptions(title, status, priority);
 
         taskRepository.update(index, title, status, priority);
-
     }
 
     public void deleteTask(int index) {
@@ -66,7 +58,16 @@ public class TaskService {
         if (index < 1 || index > size) {
             throw new InvalidArgumentException("Invalid task index: " + index + ". Please try again...");
         }
+    }
 
+    private void validateUpdateOptions(String title, TaskStatus status, TaskPriority priority) {
+        boolean hasTitle = title != null && !title.isBlank();
+        boolean hasStatus = status != null;
+        boolean hasPriority = priority != null;
+
+        if (!hasTitle && !hasStatus && !hasPriority) {
+            throw new InvalidArgumentException("Provide at least one field to update: title, status, or priority.");
+        }
     }
 
 }
