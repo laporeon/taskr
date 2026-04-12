@@ -18,12 +18,10 @@ public class DeleteCommand implements Runnable {
         this.taskService = taskService;
     }
 
-    @CommandLine.Option(
-            names = {"-i", "--index"},
+    @CommandLine.Parameters(
+            index = "0",
             paramLabel = "INDEX",
-            description = "Task index (1-based)",
-            required = true
-    )
+            description = "Task index (1-based)")
     private int index;
 
     @Override
