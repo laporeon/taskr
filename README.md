@@ -1,89 +1,128 @@
-<h1 align="center"> 📝 Taskr
+<h1 align="center"> Taskr
 
-![node](https://img.shields.io/static/v1?label=node&message=22.14.0&color=2d3748&logo=node.js&style=flat-square)
-![typescript](https://img.shields.io/static/v1?label=typescript&message=5.7.3&color=2d3748&logo=typescript&style=flat-square)
-![commander](https://img.shields.io/static/v1?label=commander&message=13.1.0&color=2d3748&logo=npm&style=flat-square)
-[![eslint](https://img.shields.io/badge/eslint-9.18.0-4b32c3?style=flat-square&logo=eslint)](https://eslint.org/)
+![java](https://img.shields.io/static/v1?label=java&message=21.0.10&labelColor=2d3748&color=grey&logo=openjdk&logoColor=white&style=flat)
+![maven](https://img.shields.io/static/v1?label=maven&message=3.9.14&labelColor=2d3748&color=grey&logo=apachemaven&logoColor=white&style=flat)
 [![MIT License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](https://github.com/laporeon/taskr/blob/main/LICENSE)
 
 </h1>
 
-> A task tracker CLI.
-
 ## Table of Contents
 
-- [Features](#Features)
-- [Requirements](#Requirements)
-- [Installing](#installing)
+- [About](#about)
+- [Requirements](#requirements)
+- [Getting Started](#getting-started)
+  - [Building](#building)
+  - [Running](#running)
+    - [Linux and macOS](#linux-and-macos)
+    - [Windows](#windows)
 - [Usage](#usage)
 - [Preview](#preview)
-  <br/>
 
----
+## About
 
-## Features
+Taskr is a Java-based CLI to easily manage your tasks through your terminal.
 
-- ✔️ Create a new task. Optionally, you can set a priority status. Default will be "low".
-- ✔️ List all tasks or list tasks by current status.
-- ✔️ Update task title, status or priority. Also possible to update all these fields at th same time.
-- ✔️ Remove a task.
+**Key features:**
+
+- Persists tasks locally in a simple `tasks.txt` file.
+- Validates status and priority against defined patterns.
+- Full CRUD operations for tasks.
+- Generates UUID-based IDs to avoid collisions in the local file.
+- Uses 1-based indexing for list and delete commands to improve usability.
 
 ## Requirements
 
-- [NodeJS](https://nodejs.org/en) v.22 or higher
+- Java 21+
+- Maven 3.9+
 
-If you use [NVM](https://github.com/nvm-sh/nvm), just run `nvm use` inside of the root folder.
+## Getting Started
 
-## Installing
+### Building
 
-After cloning this repository, you'll need to build the project to compile files.
-
-Run the following command inside the root folder to compile project:
-
-```bash
-$ npm run build
-```
-
-Yet on the root folder, run the following command to install the project globally on your machine and allow you to use it at any directory you are.
+After cloning this repository, build the project using Maven:
 
 ```bash
-$ npm install -g .
+$ mvn clean package
 ```
 
-Now you're good to go.
+This will create an executable JAR file at `target/taskr.jar`.
+
+### Running
+
+#### Linux and macOS
+
+On Linux and macOS, you have several options to run the application:
+
+- Option 1: Direct JAR execution
+
+```bash
+$ java -jar target/taskr.jar [command] [options]
+```
+
+- Option 2: Using the wrapper script
+> [!NOTE]
+> First time only, make the script executable:
+> ```bash
+> $ chmod +x taskr
+> ```
+
+```bash
+$ ./taskr [command] [options]
+```
+
+- Option 3: Create a system-wide alias by adding this to your `.bashrc` or `.zshrc`:
+
+```bash
+alias taskr='java -jar /full/path/to/taskr/target/taskr.jar'
+```
+
+Then reload your profile (`source ~/.bashrc` or `source ~/.zshrc`) or restart your terminal.
+
+Now you can use `taskr` from anywhere in your terminal.
+
+#### Windows
+
+For Windows environments, you can execute the application by choosing one of the following options:
+
+- Option 1: Using the wrapper script
+  ```bash
+  $ taskr.bat [command] [options]
+  ```
+- Option 2: Create a system-wide alias by adding this to your PowerShell profile:
+  ```shell
+  $ function taskr { java -jar "C:\full\path\to\taskr\target\taskr.jar" @args }
+  ```
+Then reload your profile (`. $PROFILE`) or restart your terminal.
+
+Now you can use `taskr` from anywhere in your terminal.
 
 ## Usage
 
+For the most up-to-date usage, run `taskr --help`.
+
 ```text
-Usage: taskr [options] [command]
-
-A task tracker CLI.
-
-Options:
-  -V, --version              output the version number
-  -h, --help                 display help for command
+Usage: taskr [command] [options]
 
 Commands:
-  add [options] <title>  Add a new task.
-  list [options]         List all tasks or list tasks by status.
-  update [options] <id>  Update task title, status or priority. You can also update all at once.
-  remove <id>            Delete a task.
-  help [command]         display help for command
+  add <title> [options]         Create a new task.
+  list [options]                List all tasks or list tasks by status.
+  update <index> [options]      Update task title, status and/or priority.
+  delete <index> [options]      Delete a task.
 
 Examples:
   $ taskr add "Clean node_modules"
-  $ taskr add "Study" -p high
+  $ taskr add "Study Java" -p "high"
   $ taskr list
   $ taskr list -s "todo"
-  $ taskr update 5 -t "New Task Title"
-  $ taskr update 5 -p "high"
-  $ taskr update 5 -s "in-progress"
-  $ taskr update 5 -t "New Task Title -p "medium" -s "done"
-  $ taskr remove 2
+  $ taskr update 2 -t "New Task Title"
+  $ taskr update 3 -p "high"
+  $ taskr update 4 -s "in-progress"
+  $ taskr update 5 -t "New Task Title" -p "medium" -s "in-progress"
+  $ taskr delete 6
 ```
 
 ## Preview
 
-![Taskr](./assets/taskr.png)
+![Taskr](./assets/taskr.gif)
 
-[⬆ Back to the top](#--taskr)
+[⬆ Back to the top](#-taskr)
