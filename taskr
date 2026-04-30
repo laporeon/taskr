@@ -13,4 +13,4 @@ if [[ ! -f "$JAR_PATH" ]]; then
   exit 1
 fi
 
-exec "$JAVA_CMD" -jar "$JAR_PATH" "$@"
+exec "$JAVA_CMD" -Dfile.encoding=UTF-8 -jar "$JAR_PATH" "$@"
