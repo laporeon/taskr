@@ -11,10 +11,6 @@
 - [About](#about)
 - [Requirements](#requirements)
 - [Getting Started](#getting-started)
-  - [Building](#building)
-  - [Running](#running)
-    - [Linux and macOS](#linux-and-macos)
-    - [Windows](#windows)
 - [Usage](#usage)
 - [Preview](#preview)
 
@@ -37,68 +33,68 @@ Taskr is a Java-based CLI to easily manage your tasks through your terminal.
 
 ## Getting Started
 
-### Building
-
-After cloning this repository, build the project using Maven:
+**1. Build**
 
 ```bash
-$ mvn clean package
+mvn clean package
 ```
 
-This will create an executable JAR file at `target/taskr.jar`.
+This will create an executable JAR at `target/taskr.jar`.
 
-### Running
+**2. Run**
 
-#### Linux and macOS
+Pick the option that fits your workflow:
 
-On Linux and macOS, you have several options to run the application:
-
-- Option 1: Direct JAR execution
+**Option 1 — Direct JAR execution**
 
 ```bash
-$ java -jar target/taskr.jar [command] [options]
+# Linux / macOS
+java -jar target/taskr.jar [command] [options]
+ 
+# Windows
+java -jar target\taskr.jar [command] [options]
 ```
 
-- Option 2: Using the wrapper script
-> [!NOTE]
-> First time only, make the script executable:
-> ```bash
-> $ chmod +x taskr
-> ```
+**Option 2 — Wrapper script**
 
 ```bash
-$ ./taskr [command] [options]
+# Linux / macOS 
+chmod +x taskr # (first time only: make it executable)
+./taskr [command] [options]
+ 
+# Windows
+taskr.bat [command] [options]
 ```
 
-- Option 3: Create a system-wide alias by adding this to your `.bashrc` or `.zshrc`:
+**Option 3 — System-wide alias (run `taskr` from anywhere)**
+
+Linux / macOS — add to your `.bashrc` or `.zshrc`:
 
 ```bash
 alias taskr='java -jar /full/path/to/taskr/target/taskr.jar'
 ```
 
-Then reload your profile (`source ~/.bashrc` or `source ~/.zshrc`) or restart your terminal.
+Then reload your profile:
 
-Now you can use `taskr` from anywhere in your terminal.
+```bash
+source ~/.bashrc   # or source ~/.zshrc
+```
 
-#### Windows
+Windows — add to your PowerShell profile (`$PROFILE`):
 
-For Windows environments, you can execute the application by choosing one of the following options:
+```powershell
+function taskr { java -jar "C:\full\path\to\taskr\target\taskr.jar" @args }
+```
 
-- Option 1: Using the wrapper script
-  ```bash
-  $ taskr.bat [command] [options]
-  ```
-- Option 2: Create a system-wide alias by adding this to your PowerShell profile:
-  ```shell
-  $ function taskr { java -jar "C:\full\path\to\taskr\target\taskr.jar" @args }
-  ```
-Then reload your profile (`. $PROFILE`) or restart your terminal.
+Then reload:
 
-Now you can use `taskr` from anywhere in your terminal.
+```powershell
+. $PROFILE
+```
 
 ## Usage
 
-For the most up-to-date usage, run `taskr --help`.
+Quick reference. For full details, run `taskr --help`.
 
 ```text
 Usage: taskr [command] [options]
