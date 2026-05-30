@@ -1,11 +1,9 @@
 package com.laporeon.taskr.enums;
 
 import com.laporeon.taskr.exceptions.InvalidArgumentException;
-import lombok.Getter;
 
 import java.util.Arrays;
 
-@Getter
 public enum TaskStatus {
 
     TODO("todo", "\u25A1", Color.YELLOW),
@@ -22,6 +20,10 @@ public enum TaskStatus {
         this.color = color;
     }
 
+    public String getValue() {
+        return value;
+    }
+
     public String getColoredSymbol() {
         return color.apply(symbol);
     }
@@ -36,4 +38,5 @@ public enum TaskStatus {
                 .findFirst()
                 .orElseThrow(() -> new InvalidArgumentException(INVALID_STATUS_VALUE_ERROR.formatted(status)));
     }
+
 }
