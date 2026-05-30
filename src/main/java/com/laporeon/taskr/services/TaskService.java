@@ -4,11 +4,10 @@ import com.laporeon.taskr.entities.Task;
 import com.laporeon.taskr.enums.TaskPriority;
 import com.laporeon.taskr.enums.TaskStatus;
 import com.laporeon.taskr.exceptions.InvalidArgumentException;
+import com.laporeon.taskr.helpers.TaskSerializer;
 import com.laporeon.taskr.repositories.TaskRepository;
 
-import java.time.Instant;
 import java.util.List;
-import java.util.UUID;
 
 public class TaskService {
 
@@ -19,15 +18,7 @@ public class TaskService {
     }
 
     public void createTask(String title, TaskStatus status, TaskPriority priority) {
-        Task task = Task.builder()
-                        .id(UUID.randomUUID())
-                        .title(title)
-                        .status(status)
-                        .priority(priority)
-                        .createdAt(Instant.now())
-                        .updatedAt(Instant.now())
-                        .build();
-
+        Task task = TaskSerializer.toEntity(title, status, priority);
         taskRepository.save(task);
     }
 
