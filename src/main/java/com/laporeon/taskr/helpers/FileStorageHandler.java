@@ -1,8 +1,6 @@
 package com.laporeon.taskr.helpers;
 
 import com.laporeon.taskr.entities.Task;
-import com.laporeon.taskr.enums.TaskPriority;
-import com.laporeon.taskr.enums.TaskStatus;
 import com.laporeon.taskr.exceptions.TaskStorageException;
 
 import java.io.BufferedReader;
@@ -12,10 +10,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class FileStorageHandler {
 
@@ -50,15 +46,7 @@ public class FileStorageHandler {
                     throw new TaskStorageException(INVALID_ATTRIBUTES_SIZE_MESSAGE.formatted(TASK_ATTRIBUTES_SIZE, attributes.length));
                 }
 
-                Task task = Task.builder()
-                        .id(UUID.fromString(attributes[0]))
-                        .title(attributes[1])
-                        .status(TaskStatus.fromString(attributes[2]))
-                        .priority(TaskPriority.fromString(attributes[3]))
-                        .createdAt(Instant.parse(attributes[4]))
-                        .updatedAt(Instant.parse(attributes[5]))
-                        .build();
-
+                Task task = TaskSerializer.fromFields(attributes);
                 tasks.add(task);
             }
 

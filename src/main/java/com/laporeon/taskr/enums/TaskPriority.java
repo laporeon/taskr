@@ -1,11 +1,9 @@
 package com.laporeon.taskr.enums;
 
 import com.laporeon.taskr.exceptions.InvalidArgumentException;
-import lombok.Getter;
 
 import java.util.Arrays;
 
-@Getter
 public enum TaskPriority {
 
     LOW("low", "●○○", Color.GREEN),
@@ -20,6 +18,10 @@ public enum TaskPriority {
         this.value = value;
         this.symbol = symbol;
         this.color = color;
+    }
+
+    public String getValue() {
+        return value;
     }
 
     public String getColoredSymbol() {
