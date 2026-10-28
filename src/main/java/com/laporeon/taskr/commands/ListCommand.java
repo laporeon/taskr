@@ -15,7 +15,6 @@ import java.util.List;
         mixinStandardHelpOptions = true
 )
 public class ListCommand implements Runnable {
-
     private final TaskService taskService;
 
     public ListCommand(TaskService taskService) {

@@ -7,7 +7,6 @@ import java.time.Instant;
 import java.util.UUID;
 
 public class Task {
-
     private UUID id;
     private String title;
     private TaskStatus status;

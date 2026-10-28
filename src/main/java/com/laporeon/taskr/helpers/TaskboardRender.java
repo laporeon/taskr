@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class TaskboardRender {
-
     public static String renderTaskboard(List<Task> tasks) {
         Map<TaskStatus, Long> countByStatus = tasks.stream()
                                                    .collect(Collectors.groupingBy(Task::getStatus, Collectors.counting()));
@@ -38,9 +37,9 @@ public class TaskboardRender {
 
 
     private static String renderSummary(long todo, long inProgress, long done) {
-        return  "\n" + formatStatusCount(todo, Color.YELLOW, "todo") + " · " +
-                        formatStatusCount(inProgress, Color.BLUE, "in-progress") + " · " +
-                        formatStatusCount(done, Color.GREEN, "done") + "\n";
+        return  "\n" + formatStatusCount(todo, Color.YELLOW, TaskStatus.TODO.getValue()) + " · " +
+                        formatStatusCount(inProgress, Color.BLUE, TaskStatus.IN_PROGRESS.getValue()) + " · " +
+                        formatStatusCount(done, Color.GREEN, TaskStatus.DONE.getValue()) + "\n";
 
 
     }
@@ -48,5 +47,4 @@ public class TaskboardRender {
     private static String formatStatusCount(long count, Color color, String label) {
         return color + String.valueOf(count) + Color.RESET + " " + label;
     }
-
 }

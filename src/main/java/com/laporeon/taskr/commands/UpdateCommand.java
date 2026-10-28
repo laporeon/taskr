@@ -7,14 +7,12 @@ import com.laporeon.taskr.services.TaskService;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
-
 @Command(
         name = "update",
         description = "Update a task by its index (1-based): title, status, and/or priority",
         mixinStandardHelpOptions = true
 )
 public class UpdateCommand implements Runnable {
-
     private final TaskService taskService;
 
     public UpdateCommand(TaskService taskService) {

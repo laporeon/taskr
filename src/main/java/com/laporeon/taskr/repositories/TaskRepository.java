@@ -9,7 +9,6 @@ import java.time.Instant;
 import java.util.List;
 
 public class TaskRepository {
-
     public void save(Task task) {
         FileStorageHandler.saveToFile(task);
     }
@@ -47,5 +46,4 @@ public class TaskRepository {
 
         FileStorageHandler.overwriteFileContent(tasks);
     }
-
 }

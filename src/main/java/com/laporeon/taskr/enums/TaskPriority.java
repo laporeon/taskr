@@ -5,7 +5,6 @@ import com.laporeon.taskr.exceptions.InvalidArgumentException;
 import java.util.Arrays;
 
 public enum TaskPriority {
-
     LOW("low", "●○○", Color.GREEN),
     MEDIUM("medium", "●●○", Color.YELLOW),
     HIGH("high", "●●●", Color.RED);

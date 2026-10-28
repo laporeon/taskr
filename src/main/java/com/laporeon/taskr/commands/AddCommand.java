@@ -13,7 +13,6 @@ import picocli.CommandLine.Command;
         mixinStandardHelpOptions = true
 )
 public class AddCommand implements Runnable {
-
     private final TaskService taskService;
 
     public AddCommand(TaskService taskService) {

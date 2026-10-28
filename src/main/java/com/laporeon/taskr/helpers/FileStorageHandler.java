@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileStorageHandler {
-
     private static final String FILE_HEADER = "ID;TITLE;STATUS;PRIORITY;CREATED_AT;UPDATED_AT";
     private static final Path FILE_PATH = Paths.get("files", "tasks.txt");
     private static final int TASK_ATTRIBUTES_SIZE = FILE_HEADER.split(";").length;
@@ -71,5 +70,4 @@ public class FileStorageHandler {
             throw new TaskStorageException("Error while trying to update file: " + exception.getMessage());
         }
     }
-
 }

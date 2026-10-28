@@ -9,7 +9,6 @@ import java.time.Instant;
 import java.util.UUID;
 
 public class TaskSerializer {
-
     public static Task fromFields(String[] attributes) {
         Task task = new Task();
         task.setId(UUID.fromString(attributes[0]));
@@ -61,5 +60,4 @@ public class TaskSerializer {
                 task.getPriority().getColoredSymbol()
         );
     }
-
 }

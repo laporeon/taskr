@@ -11,7 +11,6 @@ import picocli.CommandLine.Command;
 		mixinStandardHelpOptions = true
 )
 public class Taskr implements Runnable {
-
 	public static void main(String[] args) {
 		int exitCode = TaskrFactory.create().execute(args);
 		System.exit(exitCode);
