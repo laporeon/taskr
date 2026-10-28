@@ -11,11 +11,9 @@ import com.laporeon.taskr.services.TaskService;
 import picocli.CommandLine;
 
 public class TaskrFactory {
-
     private static final int HELP_WIDTH = 160;
 
     public static CommandLine create() {
-
         TaskRepository taskRepository = new TaskRepository();
         TaskService taskService = new TaskService(taskRepository);
 
@@ -41,5 +39,4 @@ public class TaskrFactory {
 
         return cmd;
     }
-
 }

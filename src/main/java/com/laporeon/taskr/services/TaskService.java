@@ -10,7 +10,6 @@ import com.laporeon.taskr.repositories.TaskRepository;
 import java.util.List;
 
 public class TaskService {
-
     private final TaskRepository taskRepository;
 
     public TaskService(TaskRepository taskRepository) {
@@ -60,5 +59,4 @@ public class TaskService {
             throw new InvalidArgumentException("Provide at least one field to update: title, status, or priority.");
         }
     }
-
 }

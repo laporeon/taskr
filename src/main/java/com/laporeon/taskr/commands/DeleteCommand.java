@@ -11,7 +11,6 @@ import picocli.CommandLine.Command;
         mixinStandardHelpOptions = true
 )
 public class DeleteCommand implements Runnable {
-
     private final TaskService taskService;
 
     public DeleteCommand(TaskService taskService) {

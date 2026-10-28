@@ -5,7 +5,6 @@ import com.laporeon.taskr.exceptions.InvalidArgumentException;
 import java.util.Arrays;
 
 public enum TaskStatus {
-
     TODO("todo", "\u25A1", Color.YELLOW),
     IN_PROGRESS("in-progress", "\u25D0", Color.BLUE),
     DONE("done","\u2713", Color.GREEN);
