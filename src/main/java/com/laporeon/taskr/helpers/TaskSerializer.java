@@ -10,25 +10,22 @@ import java.util.UUID;
 
 public class TaskSerializer {
     public static Task fromFields(String[] attributes) {
-        Task task = new Task();
-        task.setId(UUID.fromString(attributes[0]));
-        task.setTitle(attributes[1]);
-        task.setStatus(TaskStatus.fromString(attributes[2]));
-        task.setPriority(TaskPriority.fromString(attributes[3]));
-        task.setCreatedAt(Instant.parse(attributes[4]));
-        task.setUpdatedAt(Instant.parse(attributes[5]));
-        return task;
+        return Task.restore(
+                UUID.fromString(attributes[0]),
+                attributes[1],
+                TaskStatus.fromString(attributes[2]),
+                TaskPriority.fromString(attributes[3]),
+                Instant.parse(attributes[4]),
+                Instant.parse(attributes[5])
+        );
     }
 
     public static Task toEntity(String title, TaskStatus status, TaskPriority priority) {
-        Task task = new Task();
-        task.setId(UUID.randomUUID());
-        task.setTitle(title);
-        task.setStatus(status);
-        task.setPriority(priority);
-        task.setCreatedAt(Instant.now());
-        task.setUpdatedAt(Instant.now());
-        return task;
+        return Task.create(
+                title,
+                status,
+                priority
+        );
     }
 
     public static String toCsvString(Task task) {

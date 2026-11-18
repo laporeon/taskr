@@ -17,6 +17,8 @@ public class TaskService {
     }
 
     public void createTask(String title, TaskStatus status, TaskPriority priority) {
+        validateTitle(title);
+
         Task task = TaskSerializer.toEntity(title, status, priority);
         taskRepository.save(task);
     }
@@ -33,6 +35,7 @@ public class TaskService {
     public void updateTask(int index, String title, TaskStatus status, TaskPriority priority) {
         validateIndex(index);
         validateUpdateOptions(title, status, priority);
+        if (title != null) validateTitle(title);
 
         taskRepository.update(index, title, status, priority);
     }
@@ -47,6 +50,20 @@ public class TaskService {
 
         if (index < 1 || index > size) {
             throw new InvalidArgumentException("Invalid task index: " + index + ". Please try again...");
+        }
+    }
+
+    private void validateTitle(String title) {
+        if (title == null || title.isBlank()) {
+            throw new InvalidArgumentException("Task title cannot be empty.");
+        }
+
+        if (title.contains(";")) {
+            throw new InvalidArgumentException("Task title cannot contain ';'.");
+        }
+
+        if (title.contains("\n") || title.contains("\r")) {
+            throw new InvalidArgumentException("Task title cannot contain line breaks.");
         }
     }
 
