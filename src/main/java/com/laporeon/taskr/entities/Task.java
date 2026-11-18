@@ -7,19 +7,34 @@ import java.time.Instant;
 import java.util.UUID;
 
 public class Task {
-    private UUID id;
+    private final UUID id;
     private String title;
     private TaskStatus status;
     private TaskPriority priority;
-    private Instant createdAt;
+    private final Instant createdAt;
     private Instant updatedAt;
+
+    private Task(UUID id, String title, TaskStatus status, TaskPriority priority, Instant createdAt, Instant updatedAt) {
+        this.id = id;
+        this.title = title;
+        this.status = status;
+        this.priority = priority;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public static Task create(String title, TaskStatus status, TaskPriority priority) {
+        Instant now = Instant.now();
+        return new Task(UUID.randomUUID(), title, status, priority, now, now);
+    }
+
+    public static Task restore(UUID id, String title, TaskStatus status, TaskPriority priority,
+                               Instant createdAt, Instant updatedAt) {
+        return new Task(id, title, status, priority, createdAt, updatedAt);
+    }
 
     public UUID getId() {
         return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public String getTitle() {
@@ -48,10 +63,6 @@ public class Task {
 
     public Instant getCreatedAt() {
         return createdAt;
-    }
-
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
     }
 
     public Instant getUpdatedAt() {
