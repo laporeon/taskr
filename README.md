@@ -13,8 +13,6 @@
 - [Getting Started](#getting-started)
   - [Quick Start](#quick-start)
   - [Install as a Local Command](#install-as-a-local-command)
-    - [Linux / macOS](#linux--macos)
-    - [Windows PowerShell](#windows-powershell)
 - [Usage](#usage)
 - [Preview](#preview)
 
